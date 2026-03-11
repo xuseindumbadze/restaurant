@@ -1,0 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #141e30, #243b55);
+  padding: 10px 20px;
+  border-bottom: rgb(255, 0, 0) solid 6px;
+}
+.header .nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.header .nav .cart {
+  background-color: red;
+  padding: 1px 4px;
+  border-radius: 6px;
+}
+.header .nav a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.slider {
+  max-width: 100vw;
+  width: 100%;
+  max-height: 50vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.mefe {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  z-index: 11;
+}
+.mefe .p1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  padding: 15px 0;
+}
+
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+section img {
+  border-bottom: solid red 6px;
+}
+
+.container {
+  width: 1200px;
+  margin: auto;
+}
+
+.categories {
+  display: flex;
+  border-bottom: 3px solid red;
+  margin-top: 20px;
+}
+.categories button {
+  padding: 15px 25px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+.categories button.active {
+  background: red;
+  color: white;
+}
+
+.content {
+  display: flex;
+  margin-top: 30px;
+}
+
+/* FILTER */
+.filter {
+  width: 250px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.filter button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+.filter #apply {
+  background: red;
+  color: white;
+}
+.filter #spice {
+  width: 100%;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  height: 8px;
+  background: red;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 10px;
+}
+.filter #spice::-webkit-slider-thumb {
+  -webkit-appearance: none;
+          appearance: none;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid purple;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.filter .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.filter .checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: red;
+  cursor: pointer;
+}
+
+/* PRODUCTS */
+.products {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-left: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.card img {
+  width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card .card-body {
+  padding: 15px;
+}
+.card .price {
+  font-size: 20px;
+  font-weight: bold;
+}
+.card .add {
+  background: #ff5a3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  float: right;
+}
+
+.cartMessage {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: green;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 6px;
+  font-size: 18px;
+  z-index: 999;
+  animation: fade 0.3s;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}/*# sourceMappingURL=main.css.map */

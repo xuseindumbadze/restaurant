@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #141e30, #243b55);
+  padding: 10px 20px;
+  border-bottom: rgb(255, 0, 0) solid 6px;
+}
+.header .nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.header .nav .cart {
+  background-color: red;
+  padding: 0 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+.header .nav a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.slider {
+  max-width: 100vw;
+  width: 100%;
+  max-height: 50vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.mefe {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  z-index: 11;
+}
+.mefe .p1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  padding: 15px 0;
+}
+
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.table {
+  width: 90%;
+  margin: 50px auto;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.table thead {
+  background: #ff0000;
+  color: white;
+}
+.table th,
+.table td {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.table img {
+  width: 70px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.table button {
+  padding: 5px 10px;
+  border: none;
+  background: #ff0000;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.qty button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+}
+
+.cart-footer {
+  width: 90%;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-footer h2 {
+  font-size: 28px;
+}
+.cart-footer .checkout-btn {
+  background: red;
+  color: white;
+  padding: 15px 40px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cart-footer .checkout-btn:hover {
+  background: #c40000;
+}/*# sourceMappingURL=cart.css.map */
