@@ -1,3 +1,6 @@
+console.log("JS LOADED");
+
+
 let images = [
   "./images/photo1.jpg",
   "./images/photo3.avif",
@@ -106,7 +109,6 @@ function applyFilter() {
   let filtered = products.filter((p) => {
     if (currentCategory !== 0 && p.categoryId !== currentCategory) return false;
 
-    // ეს არის მთავარი გასწორება
     if (spiceSlider !== 0 && p.spiciness !== spiceLevel) return false;
 
     if (noNuts && p.nuts) return false;
@@ -169,3 +171,199 @@ async function addToCart(id) {
 
   showMessage();
 }
+
+
+// უპდატეე
+
+const loginModal = document.getElementById("loginModal");
+const registerModal = document.getElementById("registerModal");
+
+document.getElementById("openLogin").onclick = () => {
+loginModal.style.display = "flex";
+};
+
+document.getElementById("openRegister").onclick = () => {
+registerModal.style.display = "flex";
+};
+
+document.getElementById("closeLogin").onclick = () => {
+loginModal.style.display = "none";
+};
+
+document.getElementById("closeRegister").onclick = () => {
+registerModal.style.display = "none";
+};
+
+document.getElementById("goRegister").onclick = () => {
+loginModal.style.display = "none";
+registerModal.style.display = "flex";
+};
+
+
+
+
+document.getElementById("loginBtn").onclick = async () => {
+
+let res = await fetch(
+"https://api.everrest.educata.dev/auth/sign_in",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+email:document.getElementById("loginEmail").value,
+password:document.getElementById("loginPassword").value
+})
+});
+
+let data = await res.json();
+
+localStorage.setItem("token", data.Token);
+
+loginModal.style.display="none";
+
+location.reload(); 
+
+};
+
+function checkAuth(){
+
+let token = localStorage.getItem("token");
+
+if(token){
+
+document.querySelector(".authButtons").innerHTML = `
+<span style="color:white;font-size:12px;">Token: ${token.substring(0,20)}...</span>
+<button id="logoutBtn">Sign out</button>
+`;
+
+document.getElementById("logoutBtn").onclick = () => {
+
+localStorage.removeItem("token");
+
+location.reload();
+
+};
+
+}
+
+}
+
+checkAuth();
+
+
+document.getElementById("registerBtn").onclick = async () => {
+
+let res = await fetch(
+"https://api.everrest.educata.dev/auth/sign_up",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+firstName:document.getElementById("firstName").value,
+lastName:document.getElementById("lastName").value,
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+})
+});
+
+let data = await res.json();
+
+alert("Registration successful");
+
+registerModal.style.display="none";
+
+};
+
+
+
+  // ==================== AI CHAT ====================
+      const API_KEY = "თქვენი-API-KEY-აქ"; // ← შენი key ჩასვი აქ
+
+      let aiOpen = false;
+      let restaurantProducts = []; // პროდუქტები API-დან
+
+      // პროდუქტების ჩატვირთვა AI-სთვის
+      fetch("https://restaurant.stepprojects.ge/api/Products/GetAll")
+        .then(r => r.json())
+        .then(data => { restaurantProducts = data; });
+
+      function toggleAI() {
+        aiOpen = !aiOpen;
+        document.getElementById("aiPanel").classList.toggle("open", aiOpen);
+        if (aiOpen) document.getElementById("aiInput").focus();
+      }
+
+      function addMessage(text, type) {
+        const box = document.getElementById("aiMessages");
+        const msg = document.createElement("div");
+        msg.className = `ai-msg ${type}`;
+        msg.textContent = text;
+        box.appendChild(msg);
+        box.scrollTop = box.scrollHeight;
+        return msg;
+      }
+
+      async function sendAI() {
+        const input = document.getElementById("aiInput");
+        const btn = document.getElementById("aiSendBtn");
+        const userText = input.value.trim();
+        if (!userText) return;
+
+        addMessage(userText, "user");
+        input.value = "";
+        btn.disabled = true;
+
+        const loading = addMessage("⏳ ვფიქრობ...", "loading");
+
+        // პროდუქტების მოკლე სია AI-სთვის
+        const productList = restaurantProducts.map(p =>
+          `- ${p.name} | ფასი: $${p.price} | სიმწარე: ${p.spiciness} | ვეგეტარიანული: ${p.vegetarian ? "კი" : "არა"} | თხილი: ${p.nuts ? "კი" : "არა"}`
+        ).join("\n");
+
+        const prompt = `შენ ხარ რესტორნის AI დამხმარე. შენი ამოცანაა დაეხმარო მომხმარებელს კერძების არჩევაში.
+
+**წესები:**
+1. გამოიყენე მხოლოდ ქვემოთ მოცემული კერძების სია
+2. ყოველთვის უპასუხე ქართულად
+3. თუ მომხმარებელი ითხოვს ვეგეტარიანულს - გაუფილტრე ვეგეტარიანული კერძები
+4. თუ ითხოვს თხილის გარეშე - გაუჩვენე nuts:არა კერძები
+5. მიეცი მოკლე, მეგობრული პასუხი და ურჩიე 2-3 კერძი
+6. მიუთითე კერძის სახელი და ფასი
+
+**კერძების სია:**
+${productList}
+
+**მომხმარებლის შეკითხვა:** ${userText}`;
+
+        try {
+          const res = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST",
+            headers: {
+              "anthropic-dangerous-direct-browser-access": "true",
+              "x-api-key": API_KEY,
+              "anthropic-version": "2023-06-01",
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "claude-sonnet-4-20250514",
+              max_tokens: 80,
+              messages: [{ role: "user", content: prompt }],
+            }),
+          });
+
+          const data = await res.json();
+          loading.remove();
+          addMessage(data.content[0].text, "bot");
+        } catch (err) {
+          loading.remove();
+          addMessage("შეცდომა მოხდა. სცადეთ თავიდან.", "bot");
+        }
+
+        btn.disabled = false;
+        input.focus();
+      }
+      // ==================== END AI ====================
